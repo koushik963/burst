@@ -1,1 +1,40 @@
-echo "Hello World!!!"
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <getopt.h>
+#include <string.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <errno.h>
+#include <pthread.h>
+
+int main(int argc, char* argv[]) {
+    int choice;
+    while ((choice = getopt(argc, argv, "-l:j:b:xh")) != -1) {
+        switch (choice) {
+            case 1:
+                ip = open(optarg, O_RDONLY);
+                if (ip == -1) {
+                    perror(optarg);
+                    exit(EXIT_FAILURE);
+                }
+                size_t len = strlen(optarg);
+                file_name = malloc(len + 1);
+                if (file_name == NULL) {
+                    perror("malloc");
+                    exit(EXIT_FAILURE);
+                }
+                strcpy(file_name, optarg);
+                break;
+            case 'l':
+                max_lines = atoi(optarg);
+                if (max_lines < 1) max_lines = 500;
+                break;
+
+            case 'j':
+                no_of_jobs = atoi(optarg);
+                if (no_of_jobs < 1) no_of_jobs = 2;
+                break;
+        }
+    }
+}
