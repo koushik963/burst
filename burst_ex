@@ -8,6 +8,18 @@
 #include <errno.h>
 #include <pthread.h>
 
+
+typedef struct{
+	int lines_read;
+	char** lines_pos;
+}thread_result;
+
+typedef struct{
+	char* data;
+	ssize_t size;
+}string;
+
+
 int main(int argc, char* argv[]) {
     int choice;
     while ((choice = getopt(argc, argv, "-l:j:b:xh")) != -1) {
