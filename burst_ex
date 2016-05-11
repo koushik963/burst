@@ -35,6 +35,19 @@ int main(int argc, char* argv[]) {
                 no_of_jobs = atoi(optarg);
                 if (no_of_jobs < 1) no_of_jobs = 2;
                 break;
+	    case 'b':
+				buff_size = atoi(optarg);
+				if(buff_size < 1) buff_size = BUFSIZ;
+				break;
+			case 'x':
+				ovwrt = 1;
+				break;
+			case 'h':
+				help();
+				exit(EXIT_SUCCESS);
+			case '?':
+				write(2, "Try 'burst -h' for more information\n", 36);
+				exit(EXIT_FAILURE);
         }
     }
 }
