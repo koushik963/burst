@@ -19,6 +19,44 @@ typedef struct{
 	ssize_t size;
 }string;
 
+void write_lines(char* data, ssize_t data_size, int new_lines, char** lines_pos){
+	if(lines_written == -1){
+		next_file();
+		lines_written = 0;	
+	}
+	
+	lines_written += new_lines;
+	int overflow = lines_written - max_lines;
+	if(overflow > 0){
+		//split up the max_lines
+		char* final_line = lines_pos[new_lines - overflow - 1];
+		write(file_fd, data, final_line-data+1);
+		//make a new file
+		next_file();
+		
+		//write in a completely new file
+		lines_written = 0;
+		write_lines(final_line+1, data+data_size-final_line-1, overflow, lines_pos+new_lines-overflow);
+	}else if(overflow == 0){
+		//write the leftover to the next file
+		char* final_line = lines_pos[new_lines-1];
+		write(file_fd, data, final_line-data+1);
+		
+		//this may be the last character, We are just about to make the next file
+		if(final_line == data+data_size-1){
+			lines_written = -1;
+		}else{
+			next_file();
+			write(file_fd, final_line+1, data+data_size-final_line+1);
+		}
+
+	}else{
+		//write all the data
+		write(file_fd, data, data_size);
+	}
+}
+
+
 
 int main(int argc, char* argv[]) {
     int choice;
