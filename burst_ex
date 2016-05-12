@@ -1,0 +1,34 @@
+kr58@unix:~/Project4/burst$ ./burst -h
+Usage:
+burst [-l LINES] [OPTIONS] ... [FILE]
+burst [-u] [OPTIONS] ... [URL]
+Copy and split a file's lines to multiple files.
+
+Options:
+-l LINES	Sets the maximum number of lines for each file (default is 500).
+-x		Overwrite existing files.
+-u Download file from a url instead.
+-j JOBS		Set amount of jobs/threads to run (default is 2).
+-h		Show this help and exit.
+kr58@unix:~/Project4/burst$ ./burst [K[K[K[K[K[K[K[Kwc -lines[K[K[K[K[K-lines book.txt
+2667 book.txt
+kr58@unix:~/Project4/burst$ ./burst book.txt
+kr58@unix:~/Project4/burst$ wc --lines book.txt1
+500 book.txt1
+kr58@unix:~/Project4/burst$ wc --lines book.txt1[4P./burst book.txt
+book.txt1: File exists
+kr58@unix:~/Project4/burst$ ./burst -x book.txt
+kr58@unix:~/Project4/burst$ wc --lines book1.txt
+500 book1.txt
+kr58@unix:~/Project4/burst$ ./burst -l 400 book.txt
+book.txt1: File exists
+kr58@unix:~/Project4/burst$ ./burst -l 400 -x book.txt
+kr58@unix:~/Project4/burst$ wc --lines book1.txt
+400 book1.txt
+kr58@unix:~/Project4/burst$ ./burst -u https://www.gutenberg.org/files/52043/520 43-0.txt
+kr58@unix:~/Project4/burst$ wc --lines 520430[K-0.txt
+10468 52043-0.txt
+kr58@unix:~/Project4/burst$ ./burst 52043[K[K[K[K[K[K[K[K[K[K[K[K[Kwc --lines 523043[1P043[C[C[C-01.txt
+500 52043-01.txt
+kr58@unix:~/Project4/burst$ thank you[K[K[K[K[K[K[K[K[Kexit
+exit
