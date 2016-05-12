@@ -20,7 +20,16 @@ int no_of_jobs = 2;
 size_t bs = BUFSIZ;
 char ovrwt = 0;
 
-const char* const help = "";
+const char* const help = "Usage:\n"
+				"burst [-l LINES] [OPTIONS] ... [FILE]\n"
+				"burst [-u] [OPTIONS] ... [URL]\n"
+				"Copy and split a file's lines to multiple files.\n\n"
+				"Options:\n"
+				"-j JOBS\t\tSetting amount of jobs OR threads to run .default ==> 2.\n"
+				"-l LINES\tSets the maximum number of lines for each file (default is 500).\n"
+				"-x\t\tOverwrite existing files.\n"
+				"-u Download file from a url instead.\n"
+				"-h\t\tShow this help and exit.\n";
 
 typedef struct{
 	int no_of_lines_to_read;
