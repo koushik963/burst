@@ -1,0 +1,33 @@
+.TH burst 1
+.SH NAME
+burst - copy and split a file's lines to multiple files
+.SH SYNOPSIS
+.B burst
+.RI "[-l " LINES ]
+[OPTIONS]
+.RI "... [" FILE ]
+.SH DESCRIPTION
+burst splits a file into multiple smaller files of names (FILE1, FILE2, ...) that can have at most a set number of
+.I LINES
+.SH OPTIONS
+.TP
+.BI "-l " LINES
+Set the maximum number of lines for each file. default ==> 500
+.TP
+.B -x
+Overwrite existing files
+.TP
+.BI "-u " URL
+Download from the URL
+.TP
+.TP
+.BI "-j " JOBS
+Set amount of jobs OR threads to run .default ==> 2
+.TP
+.B -h
+Show help
+.SH AUTHOR
+Written by Koushik Ravulapelli
+.SH COPYRIGHT
+Copyright © 2016. License GPL.
+
