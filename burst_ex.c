@@ -58,6 +58,36 @@ void nextSegmentFile(){
 	free(s);
 }
 
+char *basename(char const *path)
+{
+	char *s = strrchr(path, '/');
+	if(s==NULL) {
+		return strdup(path);
+	} else {
+		return strdup(s + 1);
+	}
+}
+
+int downloadFromURL(const char *URL, const char * outputFileName)
+{  
+	CURL *cl;
+	FILE *filePointer;
+	CURLcode result;
+	cl = curl_easy_init();                                                                                                                                                       
+	if (cl)
+	{
+		filePointer = fopen(outputFileName,"wb");
+		curl_easy_setopt(cl, CURLOPT_URL, URL);
+		curl_easy_setopt(cl, CURLOPT_WRITEFUNCTION, NULL);
+		curl_easy_setopt(cl, CURLOPT_WRITEDATA, fp);
+		result = curl_easy_perform(cl);
+		curl_easy_cleanup(cl);
+		fclose(fp);
+		return 1;
+	}
+	return 0;	
+}
+
 int no_of_written_lines = 0;
 void writingLinesMethod(char* data, ssize_t ds, int new_lines, char** linePosition){
 	if(no_of_written_lines == -1){
@@ -151,8 +181,7 @@ int main(int argc, char* argv[]){
 				if(no_of_jobs < 1) no_of_jobs = 2;
 				break;
 			case 'u':
-			    printf("");
-				exit(EXIT_SUCCESS);
+			   	strcpy(URL,optarg);
 				break;
 			case 'b':
 				bs = atoi(optarg);
@@ -171,6 +200,10 @@ int main(int argc, char* argv[]){
 	}
 	
 	if(ip == 1) file_name = "a.out";
+	else if (strlen(URL) > 0) {
+		file_name = basename(URL);
+		downloadFromURL(URL, file_name);
+	}
 	sLength = strlen(file_name)+9;
 	
 	nextSegmentFile();
